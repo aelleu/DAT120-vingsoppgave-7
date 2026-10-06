@@ -13,7 +13,7 @@ def les_fil():
     Args:
 
     Returns:
-        En ordbok der hver kolonneoverskrift peker til en liste med verdier. 
+        En dict der verdien peker til en individuell liste. 
 
     """
 
