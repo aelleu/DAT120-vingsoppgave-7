@@ -2,4 +2,4 @@
 
 Olav - d)
 Lanja - f) og h)
-Andreas e) og g)
+Andreas e) og g)?
