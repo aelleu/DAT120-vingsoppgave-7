@@ -1,13 +1,8 @@
-import csv
+from plotting.py import plot_data
+from lese_inn_data import les_data, FILNAVN
 
-
-FILNAVN = "sinnes_2014_2025_med_makstemperatur.csv"
-
-
-with open(FILNAVN, "r", encoding="utf-8") as file:
-    reader = csv.reader(file, delimiter=";")
-    for row in reader:
-        print(row)
+data = les_data(FILNAVN)
+plot_data(data)
 
 
 
