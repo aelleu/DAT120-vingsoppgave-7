@@ -1,9 +1,6 @@
 import csv
 from datetime import datetime
 
-FILNAVN = "sinnes_2014_2025_med_makstemperatur.csv"
-
-
 def til_float(verdi):
     verdi = verdi.strip()
 
@@ -13,12 +10,10 @@ def til_float(verdi):
     return float(verdi.replace(",", "."))
 
 
-def les_data(filnavn):
+def les_data(filnavn="sinnes_2014_2025_med_makstemperatur.csv"):
     """Leser inn værdata fra CSV og returnerer liste med dicts"""
     data = []
     siste_dato = None
-
-
 
     KOLONNER = ["Maksimumstemperatur (døgn)",
         "Middeltemperatur (døgn)",
