@@ -9,19 +9,19 @@ def main():
     siste = max(rad["dato"].year for rad in data)
 
     # Menyvalg
-    valgmeny = {
-        "1": ("Plott værdata for et år", plot_data), 
-        "2": ("Antall dager med skiføre", antall_dager_skifore), 
-        # "3": ("Plantevekst", plantevekst), 
-        # "4": ("Lengste periode uten nedbør", lengste_tørkeperiode),
-        # "5": ("Sommer-, høysommer- og tropedager", antall_sommerdager)
-        }
+    valgmeny = [
+        ("Plott værdata for et år", plot_data), 
+        ("Antall dager med skiføre", antall_dager_skifore), 
+        # ("Plantevekst", plantevekst), 
+        # ("Lengste periode uten nedbør", lengste_tørkeperiode),
+        # ("Sommer-, høysommer- og tropedager", antall_sommerdager)
+    ]
     
     
     # Main loop
     while True:
         print("\n--- Værdata Sinnes ---")
-        for tast, (tekst, _) in valgmeny.items():
+        for tast, (tekst, _) in enumerate(valgmeny, start=1):
             print(f"{tast}: {tekst}")
         print("b: Avslutt")
 
@@ -29,11 +29,11 @@ def main():
 
         if valg == "b":
             break
-        if valg not in valgmeny:
+        if not valg.isdigit() or not 1 <= int(valg) <= len(valgmeny):
             print("Ugyldig valg. Prøv igjen.")
             continue
 
-        _, funksjon = valgmeny[valg]
+        _, funksjon = valgmeny[int(valg) - 1]
         
         # Hver funksjon skriver ut sitt eget resultat, så main trenger ikke print
         funksjon(data, les_ar(forste, siste))
