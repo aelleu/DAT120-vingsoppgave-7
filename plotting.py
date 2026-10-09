@@ -1,13 +1,9 @@
-
 import matplotlib.pyplot as plt
-
-from lese_inn_data import FILNAVN, les_data
-
+from lese_inn_data import les_data
 
 
-def plot_data(data):
 
-    årstall = input("Skriv inn et årstall mellom 2014 og 2025 : ")
+def plot_data(data, årstall):
     snødybde = []
     nedbør = []
     middeltemperatur = []
@@ -32,7 +28,7 @@ def plot_data(data):
     plt.legend()
     plt.show()
 
-data = les_data(FILNAVN)
-plot_data(data)
-
-    
+# Lagt til denne for å unngå import i main.py
+if __name__ == "__main__":
+    # data = les_data(FILNAVN)
+    plot_data(data)
