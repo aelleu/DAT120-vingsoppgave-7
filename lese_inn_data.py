@@ -14,14 +14,23 @@ def til_float(verdi):
 
 
 def les_data(filnavn):
+    """Leser inn værdata fra CSV og returnerer liste med dicts"""
     data = []
     siste_dato = None
+
+
+
+    KOLONNER = ["Maksimumstemperatur (døgn)",
+        "Middeltemperatur (døgn)",
+        "Nedbør (døgn)",
+        "Høyeste middelvind (døgn)",
+        "Snødybde"]
+
 
     with open(filnavn, "r", encoding="utf-8-sig") as file:
         reader = csv.DictReader(file, delimiter=";")
 
         for row in reader:
-
             dato_tekst = row["Tid(norsk normaltid)"].strip()
 
             if dato_tekst == "":
@@ -30,25 +39,9 @@ def les_data(filnavn):
             dato = datetime.strptime(dato_tekst, "%d.%m.%Y")
 
 
-            row["Maksimumstemperatur (døgn)"] = til_float(
-                row["Maksimumstemperatur (døgn)"]
-            )
-
-            row["Middeltemperatur (døgn)"] = til_float(
-                row["Middeltemperatur (døgn)"]
-            )
-
-            row["Nedbør (døgn)"] = til_float(
-                row["Nedbør (døgn)"]
-            )
-
-            row["Høyeste middelvind (døgn)"] = til_float(
-                row["Høyeste middelvind (døgn)"]
-            )
-
-            row["Snødybde"] = til_float(
-                row["Snødybde"]
-            )
+            # la til for loop
+            for kol in KOLONNER:
+                row[kol] = til_float(row[kol])
 
             # Forkast datoer som ikke er nyere enn forrige dato
             if siste_dato is not None and dato <= siste_dato:
