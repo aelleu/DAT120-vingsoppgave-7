@@ -36,16 +36,12 @@ def main():
 
         _, funksjon = valgmeny[int(valg) - 1]
 
-
-        # Sjekker om funksjonen trenger 2 argumenter
-        if funksjon.__code__.co_argcount == 2:
+        # Sjekker om funksjonen trenger mer enn 1 argumenter
+        if funksjon.__code__.co_argcount >= 2:
             arstall = les_ar(forste, siste)
             funksjon(data, arstall)
         else:
             funksjon(data)
-        
-
-    
 
 def les_ar(forste, siste):
     while True:
