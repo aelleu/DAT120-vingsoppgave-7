@@ -1,3 +1,4 @@
+!pip install matplotlib.pyplot
 from plotting import plot_data
 from lese_inn_data import les_data
 from verfunksjoner import antall_dager_skifore, lengste_torkeperiode
