@@ -1,22 +1,19 @@
+from lese_inn_data import les_data
 
+def plantevekst(data,årstall):
+    total_plantevekst = 0
+    MIN_TEMP = 5.0 # Minimumstemperatur for plantevekst
+    for row in data:
+        if row["dato"].year == årstall:
+            if row["Middeltemperatur (døgn)"] is not None and row["Middeltemperatur (døgn)"] > MIN_TEMP:
+                dagens_vekst = row["Middeltemperatur (døgn)"] - MIN_TEMP
+                total_plantevekst += dagens_vekst
+            continue
+            
+    print(f"Total plantevekst for året {årstall} er: {round(total_plantevekst,2)}")
+    return total_plantevekst
 
-FILNAVN = "sinnes_2014_2025_med_makstemperatur.csv"
-def plantevekst(data, ar):
-    MIN_TEMP = 5
-    total_vekst = 0
+if __name__ == "__main__":
+    data = les_data()
+    plantevekst(data)
 
-    for rad in data:
-        if rad["dato"].year == ar:
-            middeltemp = rad.get("middeltemperatur")
-
-            if middeltemp is None or middeltemp == "" or middeltemp == "-":
-                continue
-
-            if isinstance(middeltemp, str):
-                middeltemp = float(middeltemp.replace(",", "."))
-
-            if middeltemp > MIN_TEMP:
-                dagens_vekst = middeltemp - MIN_TEMP
-                total_vekst = total_vekst + dagens_vekst
-
-    print(f"Total plantevekst for året {ar} er: {round(total_vekst, 2)}")

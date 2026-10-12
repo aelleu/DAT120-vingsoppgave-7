@@ -23,6 +23,5 @@ def antall_sommerdager(data, arstall):
     print(f"Antall sommerdager i {arstall}: {antall_sommerdager}")
     print(f"Antall høysommerdager i {arstall}: {antall_hoysommerdager}")
     print(f"Antall tropedager i {arstall}: {antall_tropedager}")
-    return antall_sommerdager
-    return antall_hoysommerdager
-    return antall_tropedager
+    return antall_sommerdager,antall_hoysommerdager, antall_tropedager
+
