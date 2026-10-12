@@ -1,7 +1,7 @@
 from plotting import plot_data
 from lese_inn_data import les_data
 from verfunksjoner import antall_dager_skifore, lengste_torkeperiode
-from ny_grope import plantevekst
+from plantevekst_og_sommerdager import plantevekst
 
 
 def main():
