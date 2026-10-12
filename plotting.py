@@ -30,5 +30,5 @@ def plot_data(data, årstall):
 
 # Lagt til denne for å unngå import i main.py
 if __name__ == "__main__":
-    # data = les_data(FILNAVN)
+    data = les_data()
     plot_data(data)
