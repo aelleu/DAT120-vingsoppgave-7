@@ -6,7 +6,9 @@ from sommerdager import antall_sommerdager
 
 
 def main():
+    print("Laster inn filen...")
     data = les_data()
+    print("Filen lastet inn")
     forste = min(rad["dato"].year for rad in data)
     siste = max(rad["dato"].year for rad in data)
 
