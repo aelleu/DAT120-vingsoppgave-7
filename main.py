@@ -1,6 +1,7 @@
 from plotting import plot_data
 from lese_inn_data import les_data
-from skifore import antall_dager_skifore
+from skifore import antall_dager_skifore, lengste_torkeperiode
+
 
 
 def main():
@@ -13,7 +14,7 @@ def main():
         ("Plott værdata for et år", plot_data), 
         ("Antall dager med skiføre", antall_dager_skifore), 
         # ("Plantevekst", plantevekst), 
-        # ("Lengste periode uten nedbør", lengste_tørkeperiode),
+        ("Lengste periode uten nedbør", lengste_torkeperiode),
         # ("Sommer-, høysommer- og tropedager", antall_sommerdager)
     ]
     
@@ -34,11 +35,17 @@ def main():
             continue
 
         _, funksjon = valgmeny[int(valg) - 1]
-        
-        # Hver funksjon skriver ut sitt eget resultat, så main trenger ikke print
-        funksjon(data, les_ar(forste, siste))
 
+
+        # Sjekker om funksjonen trenger et årstall som argument
+        if funksjon.__code__.co_argcount == 2:
+            arstall = les_ar(forste, siste)
+            funksjon(data, arstall)
+        else:
+            funksjon(data)
         
+
+    
 
 def les_ar(forste, siste):
     while True:
