@@ -1,6 +1,6 @@
 from plotting import plot_data
 from lese_inn_data import les_data
-from skifore import antall_dager_skifore, lengste_torkeperiode
+from verfunksjoner import antall_dager_skifore, lengste_torkeperiode
 
 
 
@@ -37,7 +37,7 @@ def main():
         _, funksjon = valgmeny[int(valg) - 1]
 
 
-        # Sjekker om funksjonen trenger et årstall som argument
+        # Sjekker om funksjonen trenger 2 argumenter
         if funksjon.__code__.co_argcount == 2:
             arstall = les_ar(forste, siste)
             funksjon(data, arstall)
