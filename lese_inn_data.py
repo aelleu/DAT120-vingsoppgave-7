@@ -49,4 +49,3 @@ def les_data(filnavn="sinnes_2014_2025_med_makstemperatur.csv"):
 
     return data
 
-

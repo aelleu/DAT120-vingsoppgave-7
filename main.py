@@ -1,7 +1,7 @@
 from plotting import plot_data
 from lese_inn_data import les_data
 from verfunksjoner import antall_dager_skifore, lengste_torkeperiode
-
+from ny_grope import plantevekst
 
 
 def main():
@@ -13,7 +13,7 @@ def main():
     valgmeny = [
         ("Plott værdata for et år", plot_data), 
         ("Antall dager med skiføre", antall_dager_skifore), 
-        # ("Plantevekst", plantevekst), 
+        ("Plantevekst", plantevekst), 
         ("Lengste periode uten nedbør", lengste_torkeperiode),
         # ("Sommer-, høysommer- og tropedager", antall_sommerdager)
     ]
