@@ -18,7 +18,7 @@ def main():
         ("Antall dager med skiføre", antall_dager_skifore), 
         ("Plantevekst", plantevekst), 
         ("Lengste periode uten nedbør", lengste_torkeperiode),
-         ("Sommer-, høysommer- og tropedager", antall_sommerdager)
+        ("Sommer-, høysommer- og tropedager", antall_sommerdager)
     ]
     
     

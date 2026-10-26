@@ -68,5 +68,30 @@ def lengste_torkeperiode(data):
 
     startdato = sluttdato - timedelta(days=antall_dager - 1)
 
-    print(f"Den lengste perioden uten regn var fra {startdato:%d.%m.%Y} til {sluttdato:%d.%m.%Y}, den varte i {antall_dager} dager")
+    print(f"Den lengste perioden uten regn var fra {startdato:%d.%m.%Y}"
+          f" til {sluttdato:%d.%m.%Y}, den varte i {antall_dager} dager")
     return startdato, sluttdato, antall_dager
+
+def antall_dager(data, arstall):
+    """Teller antann sommerdager, høysommerdager og tropedager for hvert år og
+    plotter dette med år på x-aksen
+    
+
+    Definisjoner
+    Sommerdag - en dag med maskimaltemperatur over 20 grader
+    Høysommerdag - en dag med maskimaltemperatur over 25 grader
+    Trope dag - en dag med maksimaltemperatur over 30 grader
+    """
+
+    # Nøkkel - type dag
+    # Verdi - grader over i celcius
+    type_dag = {
+        "sommerdag": 20,
+        "hoysommerdag": 25,
+        "tropedag": 30
+    }
+
+    sommerdag = 0
+    hoysommerdag = 0
+    tropedag = 0
+    
