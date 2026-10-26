@@ -2,7 +2,7 @@ from plotting import plot_data
 from lese_inn_data import les_data
 from verfunksjoner import antall_dager_skifore, lengste_torkeperiode
 from plantevekst import plantevekst
-from sommerdager import antall_sommerdager
+from sommerdager import finn_sommerdager
 
 
 def main():
@@ -18,7 +18,7 @@ def main():
         ("Antall dager med skiføre", antall_dager_skifore), 
         ("Plantevekst", plantevekst), 
         ("Lengste periode uten nedbør", lengste_torkeperiode),
-        ("Sommer-, høysommer- og tropedager", antall_sommerdager)
+        ("Sommer-, høysommer- og tropedager", finn_sommerdager)
     ]
     
     
