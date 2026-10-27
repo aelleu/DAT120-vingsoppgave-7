@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from lese_inn_data import les_data, finn_stasjoner
 
 
 def finn_sommerdager(data, arstall, skriv_ut_resultat=True):
@@ -62,19 +63,21 @@ def antall_per_ar(data):
     return teller
 
 
-def plot_sommerdager(teller, stasjonsnavn):
+def plot_sommerdager(teller, stasjonsnavn, show=True):
     """Plotter antall sommerdager, høysommerdager og tropedager per år.
 
     Parametere:
         teller - dict fra antall_per_ar, med årstall som nøkkel og en tuple
         (sommerdager, høysommerdager, tropedager) som verdi
         stasjonsnavn - str, navn på værstasjonen
+        show - bool hvis plt.show() skal kjøres
     """
     sommerdager = [verdi[0] for verdi in teller.values()]
     hoysommerdager = [verdi[1] for verdi in teller.values()]
     tropedager = [verdi[2] for verdi in teller.values()]
         
     arstall = list(teller.keys())
+    plt.figure()
     plt.plot(arstall, sommerdager, label="Antall sommerdager")
     plt.plot(arstall, hoysommerdager, label="Antall høysommerdager")
     plt.plot(arstall, tropedager, label="Antall tropedager")
@@ -82,12 +85,23 @@ def plot_sommerdager(teller, stasjonsnavn):
     plt.ylabel("Antall dager")
     plt.title(f"Sommerdager per år - {stasjonsnavn}")
     plt.legend()
+    if show:
+        plt.show()
+
+def vis_sommerdager_per_ar():
+    """Plotter sommer-, høysommer- og tropedager per år for alle værstasjonene.
+
+    Leser inn alle CSV-filene funnet av finn_stasjoner, teller dagene
+    for hvert år og plotter én figur per stasjon.
+    """
+
+    for sti in finn_stasjoner().values():
+        data = les_data(filnavn=sti)
+        antall = antall_per_ar(data)
+
+        plot_sommerdager(antall, data[0]["Navn"], show=False)
     plt.show()
 
 
 if __name__ == "__main__":
-    from lese_inn_data import les_data
-
-    data = les_data(filnavn="oslo_blindern_1954_2025_med_makstemperatur.csv")
-    teller = antall_per_ar(data)
-    plot_sommerdager(teller, "Oslo-Blindern")
+    vis_sommerdager_per_ar()

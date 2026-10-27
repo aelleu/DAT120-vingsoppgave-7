@@ -60,3 +60,34 @@ def les_data(filnavn="sinnes_2014_2025_med_makstemperatur.csv",
 
     return data
 
+def finn_stasjoner(mappe="data"):
+    """Finner værstasjonene i en mappe ut fra filnavnene.
+
+    Stasjonsnavnet hentes fra den første delen av filnavnet, frem til
+    første del som ikke bare består av bokstaver. For eksempel gir
+    'oslo_blindern_1954_2025_med_makstemperatur.csv' navnet 'Oslo Blindern'.
+
+    Parametere:
+        mappe - navnet på undermappen med CSV-filer, relativt til
+                mappen scriptet ligger i
+
+    Returnerer en dict der nøkkelen er stasjonsnavnet og verdien er
+    full sti til CSV-filen.
+    """
+    plassering = os.path.dirname(os.path.abspath(__file__))
+    mappe_sti = os.path.join(plassering, mappe)
+
+    stasjonsnavn = {}
+
+    for filnavn in os.listdir(mappe_sti):
+        if filnavn.endswith(".csv"):
+            navn = []
+            for token in filnavn.split("_"):
+                if token.isalpha():
+                    navn.append(token.title())
+                else:
+                    break
+                
+            stasjonsnavn[" ".join(navn)] = os.path.join(mappe_sti, filnavn)
+
+    return stasjonsnavn
