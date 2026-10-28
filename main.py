@@ -1,10 +1,15 @@
 from lese_inn_data import les_data
 from verfunksjoner import antall_dager_skifore, lengste_torkeperiode
 from plantevekst import plantevekst
-from plotting import plot_data, sammenlign_temperaturer
+from plotting import plot_data, sammenlign_temperaturer, sammenlign_skisesonger
 from sommerdager import finn_sommerdager, vis_sommerdager_per_ar
 
 def main():
+    """Leser inn værdata og viser en meny med analyser til brukeren avslutter.
+ 
+    Funksjonene i menyen kalles med data og årstall, bare data, eller
+    uten argumenter, avhengig av hvor mange parametere de har.
+    """
     print("Laster inn filen...")
     data = les_data()
     print("Filen lastet inn")
@@ -18,15 +23,15 @@ def main():
         ("Plantevekst", plantevekst),
         ("Lengste periode uten nedbør", lengste_torkeperiode),
         ("Sommer-, høysommer- og tropedager for et år", finn_sommerdager),
-        # TODO: legg til slik at man bare får et plot?
         ("Sommerdager per år (plott)", vis_sommerdager_per_ar),
+        ("Dager med skiføre per sesong (plott)", sammenlign_skisesonger),
         ("Sammenlign gjennomsnittstemperatur for alle stasjoner",
          sammenlign_temperaturer)
     ]
     
     # Main loop
     while True:
-        print("\n--- Værdata Sinnes ---")
+        print("\n--- Værdata ---")
         for tast, (tekst, _) in enumerate(valgmeny, start=1):
             print(f"{tast}: {tekst}")
         print("b: Avslutt")
@@ -54,11 +59,21 @@ def main():
         input("Trykk 'enter' for å fortsette")
 
 def les_ar(forste, siste):
+    """Ber brukeren om et årstall til et gyldig år er skrevet inn.
+ 
+    Parametere:
+        forste - første tillatte årstall
+        siste  - siste tillatte årstall
+ 
+    Returnerer årstallet som heltall.
+    """
     while True:
-        arstall = input(f"Skriv inn et årstall mellom {forste} og {siste}: ").strip()
+        arstall = input(
+            f"Skriv inn et årstall mellom {forste} og {siste}: ").strip()
         if arstall.isdigit() and forste <= int(arstall) <= siste:
             return int(arstall)
         print("Ugyldig årstall. Prøv igjen.")
+
 
 if __name__ == "__main__":
     main()

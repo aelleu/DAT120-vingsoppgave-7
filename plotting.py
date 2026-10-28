@@ -1,18 +1,19 @@
 import matplotlib.pyplot as plt
 from lese_inn_data import les_data, finn_stasjoner
+from verfunksjoner import antall_dager_skifore_per_ar
 import numpy as np
 
 
 def plot_data(data, årstall):
     """Plotter daglige værdata for ett gitt år.
-
+ 
     Plotter snødybde, nedbør, middeltemperatur og høyeste middelvind
     i samme figur, med dato på x-aksen.
-
+ 
     Parametere:
-        data - liste med dicts, én per dag, med nøklene "dato",
-                "Snødybde", "Nedbør (døgn)", "Middeltemperatur (døgn)"
-                og "Høyeste middelvind (døgn)"
+        data    - liste med dicts, én per dag, med nøklene "dato",
+                  "Snødybde", "Nedbør (døgn)", "Middeltemperatur (døgn)"
+                  og "Høyeste middelvind (døgn)"
         årstall - året som skal plottes
     """
     snødybde = []
@@ -42,14 +43,14 @@ def plot_data(data, årstall):
 
 def arlig_gjennomsnittstemperatur(data, min_dager=300):
     """Regner ut gjennomsnittstemperaturen for hvert år med nok data.
-
+ 
     Dager uten målt middeltemperatur telles ikke med.
-
+ 
     Parametere:
         data      - liste med dicts, én per dag, med nøklene "dato"
                     og "Middeltemperatur (døgn)"
         min_dager - minste antall dager med måling for at året tas med
-
+ 
     Returnerer en dict der nøkkelen er årstall og verdien er
     gjennomsnittstemperaturen for det året. År med færre enn min_dager
     målinger får verdien None.
@@ -77,22 +78,32 @@ def arlig_gjennomsnittstemperatur(data, min_dager=300):
     return temperatur_dict
 
 
-def plot_gjennomsnitt(stasjoner):
-    """Plotter årlig gjennomsnittstemperatur for flere værstasjoner.
+def plot_per_stasjon(stasjoner, 
+                     tittel="Gjennomsnittstemperatur per år", 
+                     xlabel="Årstall",
+                     ylabel="Temperatur (°C)"):
+    """Plotter én kurve per værstasjon i samme figur.
+
+    Verdier som er None vises som hull i kurven.
 
     Parametere:
         stasjoner - dict der nøkkelen er stasjonsnavn og verdien er en
-                    dict fra arlig_gjennomsnittstemperatur
+                    dict med årstall (eller sesong) som nøkkel og en
+                    tallverdi eller None som verdi
+        tittel    - tittel på figuren
+        xlabel    - tekst på x-aksen
+        ylabel    - tekst på y-aksen
     """
-    for stasjonsnavn, temperaturer in stasjoner.items():
-        arstall = list(temperaturer.keys())
-        temperatur = list(temperaturer.values())
-        plt.plot(arstall, temperatur, label=stasjonsnavn,
+    plt.figure()
+    for stasjonsnavn, verdier in stasjoner.items():
+        x = list(verdier.keys())
+        y = list(verdier.values())
+        plt.plot(x, y, label=stasjonsnavn,
                 marker="o", markersize=3)
 
-    plt.title("Gjennomsnittstemperatur per år")
-    plt.xlabel("Årstall")
-    plt.ylabel("Temperatur (°C)")
+    plt.title(tittel)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
     plt.legend()
     plt.show()
 
@@ -109,8 +120,23 @@ def sammenlign_temperaturer():
     for sti in finn_stasjoner().values():
         data = les_data(filnavn=sti)
         stasjoner[data[0]["Navn"]] = arlig_gjennomsnittstemperatur(data)
-    plot_gjennomsnitt(stasjoner)
+    plot_per_stasjon(stasjoner)
 
+def sammenlign_skisesonger():
+    """Plotter antall dager med skiføre per sesong for alle værstasjonene.
+ 
+    Leser inn alle CSV-filene funnet av finn_stasjoner, teller dager med
+    skiføre for hver sesong med nok data, og plotter alle stasjonene i
+    samme figur. Sesongen angis med året den slutter.
+    """
+    stasjoner = {}
+    for sti in finn_stasjoner().values():
+        data = les_data(filnavn=sti)
+        stasjoner[data[0]["Navn"]] = antall_dager_skifore_per_ar(data)
+    plot_per_stasjon(stasjoner,
+                     tittel="Dager med skiføre per sesong",
+                     xlabel="Sesong (sluttår)",
+                     ylabel="Antall dager med skiføre")
 
 if __name__ == "__main__":
-    sammenlign_temperaturer()
+    sammenlign_skisesonger()
